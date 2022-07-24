@@ -19,7 +19,9 @@ class JurusanController extends Controller
     public function index()
     {
         $a = jurusan::all();
-        return view('jurusan.index', ['jurusan' => $a]);
+        $title = "jurusan";
+
+        return view('jurusan.index', ['jurusan' => $a, 'title' => $title]);
 
     }
 

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container">
@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 @include('layouts._flash')
                 <div class="card border-secondary">
-                    <div class="card-header mb-3">Data Nilai
+                    <div class="card-header mb-3">Data Jurusan
                         <a href="{{ route('jurusan.create') }}"
                             class="btn btn-sm btn-primary" style="float: right;">Add Data
                         </a>

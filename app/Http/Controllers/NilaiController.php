@@ -41,7 +41,9 @@ class NilaiController extends Controller
     public function index()
     {
         $a = nilai::all();
-        return view('nilai.index', ['nilai' => $a]);
+        $title = "nilai";
+
+        return view('nilai.index', ['nilai' => $a, 'title' => $title]);
     }
 
     /**

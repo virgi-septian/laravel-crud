@@ -17,18 +17,11 @@ class PostController extends Controller
         $this->middleware('auth');
     }
 
-    public function nav()
-    {
-        $title = [
-            'title' => 'posts',
-        ];
-        return view('post.index', compact('title'));
-    }
-
     public function index()
     {
         $a = Post::all();
-        return view('post.index', ['post' => $a]);
+        $title = "post";
+        return view('post.index', ['post' => $a, 'title' => $title]);
     }
 
     /**

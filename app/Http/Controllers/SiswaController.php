@@ -17,18 +17,11 @@ class SiswaController extends Controller
         $this->middleware('auth');
     }
 
-    public function nav()
-    {
-        $title = [
-            'title' => 'siswa',
-        ];
-        return view('siswa.index', ['title' => $title]);
-    }
-
     public function index()
     {
         $a = siswa::all();
-        return view('siswa.index', ['siswa' => $a]);
+        $title = "siswa";
+        return view('siswa.index', ['siswa' => $a, 'title' => $title]);
 
     }
 

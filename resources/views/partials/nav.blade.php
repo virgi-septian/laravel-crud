@@ -11,7 +11,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav me-auto">
                 <li>
-                    <a class="nav-link " href="{{ route('post.index') }}">Post</a>
+                    <a class="nav-link" href="{{ route('post.index') }}">Post</a>
                 </li>
                 <li>
                     <a class="nav-link " href="{{ route('siswa.index') }}">Siswa</a>
