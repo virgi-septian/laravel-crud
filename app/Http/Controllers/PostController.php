@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -19,9 +19,9 @@ class PostController extends Controller
 
     public function index()
     {
+        //
         $a = Post::all();
-        $title = "post";
-        return view('post.index', ['post' => $a, 'title' => $title]);
+        return view('post.index', ['post' => $a]);
     }
 
     /**
@@ -31,6 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
+        //
         return view('post.create');
     }
 
@@ -42,16 +43,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|:post|max:225',
-            'content' => 'required',
+        //
+        $validate = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'content' => 'required'
         ]);
 
         $post = new Post();
         $post->title = $request->title;
         $post->content = $request->content;
         $post->save();
-        return redirect()->route('post.index')->with('succes', "Data Berhasil dibuat");
+        
+        return redirect()->route('post.index')->with('succes', 'Data Berhasil Dibuat!');
     }
 
     /**
@@ -62,7 +65,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        //
+        $post = Post::FindOrFail($id);
         return view('post.show', compact('post'));
     }
 
@@ -74,7 +78,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        //
+        $post = Post::FindOrFail($id);
         return view('post.edit', compact('post'));
     }
 
@@ -87,18 +92,18 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'title' => 'required|    :post|max:225',
-            'content' => 'required',
+        //
+        $validate = $request->validate([
+            'title' => 'required|unique:posts|max:255',
+            'content' => 'required'
         ]);
 
-        $post = Post::findOrFail($id);
-
+        $post = Post::FindOrFail($id);
         $post->title = $request->title;
         $post->content = $request->content;
         $post->save();
-        return redirect()->route('post.index')->with('succes', "Data Berhasil diedit");
-
+        
+        return redirect()->route('post.index')->with('succes', 'Data Berhasil diedit!');
     }
 
     /**
@@ -109,8 +114,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::FindOrFail($id);
         $post->delete();
-        return redirect()->route('post.index')->with('succes', "Data Berhasil dihapus");
+        return redirect()->route('post.index')->with('Succes',"Data Berhasil Di Hapus");
     }
 }

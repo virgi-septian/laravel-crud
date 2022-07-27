@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\jurusan;
 use Illuminate\Http\Request;
+use App\Models\Jurusan;
 
 class JurusanController extends Controller
 {
@@ -16,13 +16,12 @@ class JurusanController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function index()
     {
-        $a = jurusan::all();
-        $title = "jurusan";
-
-        return view('jurusan.index', ['jurusan' => $a, 'title' => $title]);
-
+        //
+        $a = Jurusan::all();
+        return view('latihan.jurusan.index', ['jurusan'=>$a]);
     }
 
     /**
@@ -32,8 +31,8 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        return view('jurusan.create');
-
+        //
+        return view('latihan.jurusan.create');
     }
 
     /**
@@ -44,88 +43,89 @@ class JurusanController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'kode_mata_pelajaran' => 'required',
+        //
+        $validate = $request->validate([
+            'kode_mata_pelajaran' => 'required|unique:jurusans',
             'nama_mata_pelajaran' => 'required',
             'semester' => 'required',
-            'jurusan' => 'required',
+            'jurusan' => 'required'
         ]);
 
-        $jurusan = new jurusan();
+        $jurusan = new Jurusan();
         $jurusan->kode_mata_pelajaran = $request->kode_mata_pelajaran;
         $jurusan->nama_mata_pelajaran = $request->nama_mata_pelajaran;
         $jurusan->semester = $request->semester;
         $jurusan->jurusan = $request->jurusan;
-        $jurusan->save();
-        return redirect()->route('jurusan.index')->with('success', "Data Berhasil dibuat");
 
+        $jurusan->save();
+
+        return redirect()->route('jurusan.index')->with('succes','Data Berhasil Dibuat');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\jurusan  $jurusan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $jurusan = jurusan::findOrFail($id);
-        return view('jurusan.show', compact('jurusan'));
-
+        //
+        $jurusan = Jurusan::FindOrFail($id);
+        return view('latihan.jurusan.show', compact('jurusan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\jurusan  $jurusan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $jurusan = jurusan::findOrFail($id);
-
-        return view('jurusan.edit', compact('jurusan'));
-
+        //
+        $jurusan = Jurusan::FindOrFail($id);
+        return view('latihan.jurusan.edit', compact('jurusan'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\jurusan  $jurusan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'kode_mata_pelajaran' => 'required',
+        //
+        $validate = $request->validate([
+            'kode_mata_pelajaran' => 'required|unique:jurusans',
             'nama_mata_pelajaran' => 'required',
             'semester' => 'required',
-            'jurusan' => 'required',
+            'jurusan' => 'required'
         ]);
 
-        $jurusan = jurusan::findOrFail($id);
-
+        $jurusan = Jurusan::FindOrFail($id);
         $jurusan->kode_mata_pelajaran = $request->kode_mata_pelajaran;
         $jurusan->nama_mata_pelajaran = $request->nama_mata_pelajaran;
         $jurusan->semester = $request->semester;
         $jurusan->jurusan = $request->jurusan;
         $jurusan->save();
-        return redirect()->route('jurusan.index')->with('success', "Data Berhasil diedit");
 
+        return redirect()->route('jurusan.index')->with('succes','Data Berhasil Diedit');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\jurusan  $jurusan
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $jurusan = jurusan::findOrFail($id);
+        //
+        $jurusan = Jurusan::FindOrFail($id);
         $jurusan->delete();
-        return redirect()->route('jurusan.index')->with('success', "Data Berhasil dihapus");
-
+        return redirect()->route('jurusan.index')->with('succes',"Data Berhasil Di Hapus!");
     }
 }

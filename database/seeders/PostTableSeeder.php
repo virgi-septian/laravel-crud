@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use DB;
 
 class PostTableSeeder extends Seeder
 {
@@ -14,13 +15,13 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        $sample = [
-            ['title' => 'Assalaam Juara', 'content' => 'Assalaam Studio'],
-            ['title' => 'Assalaam Berkuban', 'content' => 'Assalaam Studio'],
-            ['title' => 'Assalaam Bersholawat', 'content' => 'Assalaam Studio'],
+        //
+        $sampel = [
+            ['title' => "Assalaam Juara", 'content' => "Assalaam Studio"],
+            ['title' => "Assalaam Berkuban", 'content' => "Assalaam Studio"],
+            ['title' => "Assalaam Bersholawat", 'content' => "Assalaam Studio"]
         ];
 
-        DB::table('post')->insert($sample);
-
+        DB::table('posts')->insert($sampel);
     }
 }

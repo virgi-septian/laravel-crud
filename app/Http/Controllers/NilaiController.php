@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\nilai;
+use App\Models\Nilai;
 use Illuminate\Http\Request;
 
 class NilaiController extends Controller
@@ -17,22 +17,22 @@ class NilaiController extends Controller
         $this->middleware('auth');
     }
 
-    public function grade($a)
+    public function indeksNilai($a)
     {
         if ($a <= 100 && $a >= 90) {
-            $b = 'A';
-        } else if ($a < 90 && $a >= 80) {
-            $b = 'B';
-        } else if ($a < 80 && $a >= 70) {
-            $b = 'C';
-        } else if ($a < 70 && $a >= 50) {
-            $b = 'D';
-        } else if ($a < 50 && $a >= 30) {
-            $b = 'E';
+            $b = "A";
+        } elseif ($a < 90 && $a >= 80) {
+            $b = "B";
+        } elseif ($a < 80 && $a >= 70) {
+            $b = "C";
+        } elseif ($a < 70 && $a >= 50) {
+            $b = "D";
+        } elseif ($a < 50 && $a >= 30) {
+            $b = "E";
         } else if ($a < 30 && $a >= 0) {
-            $b = 'E';
+            $b = "F";
         } else {
-            $b = 'Grade Error';
+            $b = "Grade Error!";
         }
 
         return $b;
@@ -40,10 +40,9 @@ class NilaiController extends Controller
 
     public function index()
     {
-        $a = nilai::all();
-        $title = "nilai";
-
-        return view('nilai.index', ['nilai' => $a, 'title' => $title]);
+        //
+        $a = Nilai::all();
+        return view('latihan.nilai.index', ['nilai' => $a]);
     }
 
     /**
@@ -53,8 +52,8 @@ class NilaiController extends Controller
      */
     public function create()
     {
-        return view('nilai.create');
-
+        //
+        return view('latihan.nilai.create');
     }
 
     /**
@@ -65,87 +64,90 @@ class NilaiController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nis' => 'required',
-            'kode_mata_pelajaran' => 'required',
+        //
+        $validate = $request->validate([
+            'nis' => 'required|unique:nilais',
+            'kode_mata_pelajaran' => 'required|unique:nilais',
             'nilai' => 'required',
+            'indeks_nilai' => 'required',
         ]);
 
-        $nilai = new nilai();
+        $nilai = new Nilai();
         $nilai->nis = $request->nis;
         $nilai->kode_mata_pelajaran = $request->kode_mata_pelajaran;
         $nilai->nilai = $request->nilai;
-        $nilai->grade = $this->grade($nilai->nilai);
+        $nilai->indeks_nilai = $request->indeks_nilai;
+
         $nilai->save();
 
-        return redirect()->route('nilai.index')->with('success', "Data Berhasil dibuat");
-
+        return redirect()->route('nilai.index')->with('succes', 'Data Berhasil Dibuat');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\nilai  $nilai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $nilai = nilai::findOrFail($id);
-        return view('nilai.show', compact('nilai'));
-
+        //
+        $nilai = Nilai::FindOrFail($id);
+        return view('latihan.nilai.show', compact('nilai'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\nilai  $nilai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $nilai = nilai::findOrFail($id);
-
-        return view('nilai.edit', compact('nilai'));
-
+        //
+        $nilai = Nilai::FindOrFail($id);
+        return view('latihan.nilai.edit', compact('nilai'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\nilai  $nilai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'nis' => 'required',
-            'kode_mata_pelajaran' => 'required',
+        //
+        $validate = $request->validate([
+            'nis' => 'required|unique:nilais',
+            'kode_mata_pelajaran' => 'required|unique:nilais',
             'nilai' => 'required',
+            'indeks_nilai' => 'required',
         ]);
 
-        $nilai = nilai::findOrFail($id);
-
+        $nilai = Nilai::FindOrFail($id);
         $nilai->nis = $request->nis;
         $nilai->kode_mata_pelajaran = $request->kode_mata_pelajaran;
         $nilai->nilai = $request->nilai;
-        $nilai->grade = $this->grade($nilai->nilai);
-        $nilai->save();
-        return redirect()->route('nilai.index')->with('success', "Data Berhasil diedit");
+        $nilai->indeks_nilai = $request->indeks_nilai;
 
+        $nilai->save();
+
+        return redirect()->route('nilai.index')->with('succes', 'Data Berhasil Diedit!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\nilai  $nilai
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $nilai = nilai::findOrFail($id);
+        //
+        $nilai = Nilai::FindOrFail($id);
         $nilai->delete();
-        return redirect()->route('nilai.index')->with('success', "Data Berhasil dihapus");
-
+        return redirect()->route('nilai.index')->with('succes', "Data Berhasil Di Hapus");
     }
 }

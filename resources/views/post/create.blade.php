@@ -1,11 +1,12 @@
 @extends('layouts.admin')
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @include('layouts._flash')
-                <div class="card border-secondary">
-                    <div class="card-header mb-3">Data Posts </div>
+                <div class="card border-secondary bg-gray text-light">
+                    <div class="card-header mb-3 border-bottom border-1">Data Post</div>
 
                     <div class="card-body">
                         <form action="{{ route('post.store') }}" method="post">
@@ -29,12 +30,12 @@
                                     </span>
                                 @enderror
                             </div>
-
-                            <div class="mb-3">
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-primary" type="submit">Save</button>
+                            <center>
+                                <div class="btn-group mt-4 pt-5" role="group" aria-label="Basic mixed styles example">
+                                    <button type="submit" name="save" class="btn btn-primary">Simpan </button>
+                                    <a href="{{ route('post.index') }}" class="btn btn-danger">Batal</a>
                                 </div>
-                            </div>
+                            </center>
                         </form>
                     </div>
                 </div>

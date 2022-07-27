@@ -1,15 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+            <div class="card bg-gray text-light">
+                <div class="card-header border-bottom border-1">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    <h3>Ini Halaman Utama</h3>
-                </div>
+                <h3 class="ps-3" style="font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+                    Ini Halaman Login
+                </h3>
             </div>
         </div>
     </div>
